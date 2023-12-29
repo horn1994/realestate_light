@@ -1,0 +1,5 @@
+folium==0.15.1
+geopy==2.2.0
+numpy==1.23.0
+pandas==2.1.4
+selenium==4.16.0

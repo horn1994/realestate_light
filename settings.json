@@ -1,0 +1,20 @@
+{
+      "url_init": "https://ingatlan.com/lista/elado+lakas+budapest-budai-oldal?page=",
+      "scraper_user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.50 Safari/537.36",
+      "file_name": "data/all_links_buda.txt",
+      "classes": {
+            "location": "card-title px-0 text-nickel fw-bold pb-2",
+            "price_mill": "listing-property justify-content-around col-12 col-sm col-print d-flex flex-column text-center print-border-end border-sm-end border-1 border-ash fs-7 font-family-secondary",
+            "size": "listing-property justify-content-around col col-print d-flex flex-column text-center border-end border-1 border-ash fs-7 font-family-secondary",
+            "rooms": "listing-property justify-content-around col col-print d-flex flex-column text-center fs-7 font-family-secondary",
+            "table1": "col col-print-6 table table-borderless h-100 w-50 border-end border-1",
+            "table2": "col col-print-6 table table-borderless ms-3 h-100 w-50"
+      },
+      "data_file_name": "data/all_data_buda.json",
+      "map_file_name": "maps/map_buda_sample.html",
+      "filters": {
+            "Ár_millió": {"min": 70, "max": 120},
+            "Alapterület": {"min": 70, "max": 170},
+            "Szobák": {"min": 2, "max": 10}
+      }
+}
