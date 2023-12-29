@@ -176,6 +176,8 @@ def scraper(
     return all_data
 
 def enrich_data(all_data):
+    print("Enriching data with coordinates..")
+    
     geolocator = Nominatim(user_agent="realestate-locator")
     
     for i,v in all_data.items():
