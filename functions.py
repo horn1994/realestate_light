@@ -48,7 +48,7 @@ def get_html(
     #link collector
     href_links_all = []
     
-    for i in range(20): #page_num
+    for i in range(page_num): #page_num
         #Get updated url
         driver=webdriver.Chrome(options=options)
         url = url_init + str(i+1)
