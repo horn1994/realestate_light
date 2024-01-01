@@ -1,5 +1,12 @@
 {
-      "url_init": "https://ingatlan.com/lista/elado+lakas+budapest-budai-oldal?page=",
+      "url_init": {
+            "url": "https://ingatlan.com/lista/elado+lakas+{}-{}-m2+budapest-budai-oldal+2-szoba-felett+70-115-mFt?page=",
+            "size_filter": {
+                  "min": 78,
+                  "max": 118,
+                  "step": 2
+            }
+      },
       "scraper_user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.50 Safari/537.36",
       "file_name": "data/all_links_buda.txt",
       "classes": {

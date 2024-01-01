@@ -15,12 +15,18 @@ def load_settings():
     return settings
 
 def get_html(
-    url_init, 
-    user_agent,
-    file_name,
+    settings,
     page_init = str(1),
 
 ):
+    #Set vars
+    url_init = settings['url_init']['url']
+    user_agent = settings['scraper_user_agent']
+    file_name = settings['file_name']
+    filter_start = settings['url_init']['size_filter']['min']
+    filter_end = settings['url_init']['size_filter']['max']
+    filter_step = settings['url_init']['size_filter']['step']
+    
     # Set up the browser
     options = webdriver.ChromeOptions()
     options.add_argument('--headless=new')  # Run the browser in headless mode (without GUI)
@@ -29,47 +35,64 @@ def get_html(
     
     driver=webdriver.Chrome(options=options)
     
-    try:
-        # Navigate to the URL
-        url = url_init+page_init
-        driver.get(url)
-        
-        # Get the HTML content
-        #html_content = driver.page_source
-
-        #Total number of pages
-        pages =  driver.find_element('xpath','.//span[@class = "text-battleship"]').get_attribute("textContent")
-        page_num = int(re.findall(r'\d+', pages)[0])
-        
-    finally:
-        # Close the browser
-        driver.quit()
+    start = filter_start
+    href_links_final = []
     
-    #link collector
-    href_links_all = []
-    
-    for i in range(page_num): #page_num
-        #Get updated url
-        driver=webdriver.Chrome(options=options)
-        url = url_init + str(i+1)
-        driver.get(url)
+    while start < filter_end:
+        try:
+            driver=webdriver.Chrome(options=options)
+            # Navigate to the URL
+            url_filt = url_init.format(
+                start,
+                start+filter_step
+            )+page_init
+            driver.get(url_filt)
 
-        #Links
-        ids = driver.find_elements(by=By.XPATH, value="//a[@data-listing-id]")
-        href_links = ["https://ingatlan.com/" + e.get_attribute("data-listing-id") for e in ids]
-        href_links_all.extend(href_links)
+            # Get the HTML content
+            #html_content = driver.page_source
+
+            #Total number of pages
+            pages =  driver.find_element('xpath','.//span[@class = "text-battleship"]').get_attribute("textContent")
+            page_num = int(re.findall(r'\d+', pages)[0])
+
+        finally:
+            # Close the browser
+            driver.quit()
+
+        #link collector
+        href_links_all = []
+
+        for i in range(page_num): #page_num
+            #Get updated url
+            driver=webdriver.Chrome(options=options)
+            url = url_init.format(
+                start,
+                start+filter_step
+            )+ str(i+1)
+            driver.get(url)
+
+            #Links
+            ids = driver.find_elements(by=By.XPATH, value="//a[@data-listing-id]")
+            href_links = ["https://ingatlan.com/" + e.get_attribute("data-listing-id") for e in ids]
+            href_links_all.extend(href_links)
+
+            # Close the browser
+            driver.quit()
+
+            print(f"{i+1}/{page_num} is done")
         
-        # Close the browser
-        driver.quit()
+        href_links_final.extend(href_links_all) 
         
-        print(f"{i+1}/{page_num} is done")
+        start+=filter_step
+        print(f'{url_init.format(start,start+filter_step)} finished')
         
+    
     with open(r'{}'.format(file_name), 'w') as fp:
-        for item in href_links_all:
-            # write each item on a new line
+        for item in href_links_final:
             fp.write("%s\n" % item)
-        
-    return href_links_all
+    
+
+    return href_links_final
 
 def parse_table(
     table_id, 
@@ -97,10 +120,7 @@ def scraper(
     
     #Scraping links
     all_links = get_html(
-        url_init = settings['url_init'], 
-        user_agent = settings['scraper_user_agent'], 
-        page_init = str(1),
-        file_name = settings['file_name']
+        settings = settings
     )
     
     #Reading original data if exists
@@ -139,7 +159,7 @@ def scraper(
         # Set up the browser
         driver=webdriver.Chrome(options=options)
         driver.get(_)
-        html_content = driver.page_source
+        #html_content = driver.page_source
         
         #Basic info
         data = {'url': _}
