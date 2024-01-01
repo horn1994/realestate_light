@@ -1,9 +1,9 @@
 {
       "url_init": {
-            "url": "https://ingatlan.com/lista/elado+lakas+{}-{}-m2+budapest-budai-oldal+2-szoba-felett+70-120-mFt?page=",
+            "url": "https://ingatlan.com/lista/elado+lakas+{}-{}-m2+budapest-budai-oldal+2-szoba-felett+70-115-mFt?page=",
             "size_filter": {
                   "min": 78,
-                  "max": 82,
+                  "max": 118,
                   "step": 2
             }
       },
