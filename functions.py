@@ -83,9 +83,8 @@ def get_html(
         
         href_links_final.extend(href_links_all) 
         
-        start+=filter_step
         print(f'{url_init.format(start,start+filter_step)} finished')
-        
+        start+=filter_step 
     
     with open(r'{}'.format(file_name), 'w') as fp:
         for item in href_links_final:
@@ -188,7 +187,7 @@ def scraper(
 
         driver.quit()
         
-        if i == 500:
+        if i // 500 == 0:
             save_file = open(settings['data_file_name'], "w", encoding='utf8')  
             json.dump(all_data, save_file, indent = 6, ensure_ascii=False)  
             save_file.close()  
@@ -215,6 +214,10 @@ def create_map(settings):
     
     data = pd.read_json(settings['data_file_name']).T
     
+    #Get scraping time
+    data.reset_index(inplace = True)
+    data.rename(columns={'index':'scrape_time'}, inplace = True)
+    
     # Get data filters from settings
     filter_dict = settings['filters']
 
@@ -231,12 +234,18 @@ def create_map(settings):
         price = row["Ár_millió"]
         size = row["Alapterület"]
         rooms = row["Szobák"]
+        scraping_time = row["scrape_time"]
 
         if coordinates is not None:
-            iframe = folium.IFrame(f"URL: <a href={url}>{url}</a><br> Price (mill): {price}<br> Size (m2): {size}<br> Rooms (full-sized): {rooms}")
+            iframe = folium.IFrame(
+                f'''
+                URL: <a href={url}>{url}</a><br> Price (mill): {price}<br> Size (m2): {size}<br> \
+                Rooms (full-sized): {rooms}<br> Scraping time: {scraping_time}<br>
+                '''
+            )
             popup = folium.Popup(iframe,
-                                 min_width=210,
-                                 max_width=210)
+                                 min_width=230,
+                                 max_width=230)
             folium.Marker(
                 location=row["Koordináták"],
                 tooltip="Details",

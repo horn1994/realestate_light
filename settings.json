@@ -4,7 +4,7 @@
             "size_filter": {
                   "min": 78,
                   "max": 118,
-                  "step": 2
+                  "step": 10
             }
       },
       "scraper_user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.50 Safari/537.36",
@@ -20,8 +20,8 @@
       "data_file_name": "data/all_data_buda.json",
       "map_file_name": "maps/map_buda_sample.html",
       "filters": {
-            "Ár_millió": {"min": 70, "max": 120},
-            "Alapterület": {"min": 70, "max": 170},
-            "Szobák": {"min": 2, "max": 10}
+            "Ár_millió": {"min": 70, "max": 115},
+            "Alapterület": {"min": 78, "max": 118},
+            "Szobák": {"min": 2, "max": 1000}
       }
 }
