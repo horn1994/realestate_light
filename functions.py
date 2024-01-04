@@ -200,13 +200,18 @@ def enrich_data(all_data):
     geolocator = Nominatim(user_agent="realestate-locator")
     
     for i,v in all_data.items():
-        try:
-            location = geolocator.geocode(v["Cím"])
-            all_data[i]["Pontos_cím"] = location.address
-            all_data[i]["Koordináták"] = (location.latitude, location.longitude)
-        except AttributeError:
-            all_data[i]["Pontos_cím"] = np.nan
-            all_data[i]["Koordináták"] = np.nan
+        if "Pontos_cím" not in all_data[i]:
+            try:
+                location = geolocator.geocode(v["Cím"])
+                all_data[i]["Pontos_cím"] = location.address
+                all_data[i]["Koordináták"] = (location.latitude, location.longitude)
+            except AttributeError:
+                all_data[i]["Pontos_cím"] = np.nan
+                all_data[i]["Koordináták"] = np.nan
+        else:
+            pass
+        
+    print("All done")
     
     return all_data
 
