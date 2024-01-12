@@ -2,8 +2,8 @@
       "url_init": {
             "url": "https://ingatlan.com/lista/elado+lakas+{}-{}-m2+budapest-budai-oldal+2-szoba-felett+70-115-mFt?page=",
             "size_filter": {
-                  "min": 78,
-                  "max": 118,
+                  "min": 70,
+                  "max": 120,
                   "step": 10
             }
       },
@@ -21,7 +21,7 @@
       "map_file_name": "maps/map_buda_sample.html",
       "filters": {
             "Ár_millió": {"min": 70, "max": 115},
-            "Alapterület": {"min": 78, "max": 118},
+            "Alapterület": {"min": 70, "max": 120},
             "Szobák": {"min": 2, "max": 1000}
       }
 }
